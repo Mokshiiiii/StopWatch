@@ -3,7 +3,6 @@ const startBtn = document.querySelector("#startBtn")
 const stopBtn = document.querySelector("#stopBtn");
 const reset = document.querySelector("#reset")
 
-
 let msec = 0;
 let sec = 0;
 let mins = 0;
