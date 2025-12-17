@@ -158,3 +158,10 @@ button:active {
     font-size: 14px;
   }
 }
+#statusMsg {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+  min-height: 1em;
+}

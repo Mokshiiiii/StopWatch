@@ -1,7 +1,7 @@
-const timerDisplay = document.querySelector("#timerDisplay")
-const startBtn = document.querySelector("#startBtn")
+const startBtn = document.querySelector("#startBtn");
 const stopBtn = document.querySelector("#stopBtn");
-const reset = document.querySelector("#reset")
+const reset = document.querySelector("#reset");
+const timerDisplay = document.querySelector("#timerDisplay");
 
 let msec = 0;
 let sec = 0;
@@ -9,54 +9,58 @@ let mins = 0;
 let timerId = null;
 
 startBtn.addEventListener("click", () => {
-    if (timerId !== null) return;
+  if (timerId !== null) return;
 
-    timerId = setInterval(startTimer, 10)
+  timerId = setInterval(startTimer, 10);
 });
 
+function startTimer() {
+  msec++;
+  if (msec == 100) {
+    msec = 0;
+    sec++;
+    if (sec == 60) {
+      sec = 0;
+      mins++;
+    }
+  }
+  let msecString = msec < 10 ? `0${msec}` : msec;
+  let secString = sec < 10 ? `0${sec}` : sec;
+  let minsString = mins < 10 ? `0${mins}` : mins;
+  timerDisplay.textContent = `${minsString}:${secString}:${msecString}`;
+}
+
+const captureBtn = document.querySelector("#captureBtn");
+const statusMsg = document.querySelector("#statusMsg");
 const timeList = document.querySelector("#timeList");
 
-stopBtn.addEventListener("click", () => {
-  if (timerId === null) return;
+captureBtn.addEventListener("click", () => {
+  let msecString = msec < 10 ? `0${msec}` : `${msec}`;
+  let secString = sec < 10 ? `0${sec}` : `${sec}`;
+  let minsString = mins < 10 ? `0${mins}` : `${mins}`;
 
+  let li = document.createElement("li");
+  li.textContent = `${minsString}:${secString}:${msecString}`;
+  timeList.appendChild(li);
+
+  if( li.textContent == 0 ){
+    statusMsg.textContent = "Start the stopwatch to capture time";
+    return;
+  }
+    statusMsg.textContent = "";
+});
+
+stopBtn.addEventListener("click", () => {
+  if (timerId == null) return;
   clearInterval(timerId);
   timerId = null;
-
-  const msecString = msec < 10 ? `0${msec}` : `${msec}`;
-  const secString = sec < 10 ? `0${sec}` : `${sec}`;
-  const minsString = mins < 10 ? `0${mins}` : `${mins}`;
-
-  const li = document.createElement("li");
-  li.textContent = `${minsString}:${secString}:${msecString}`;
-
-  timeList.appendChild(li);
 });
 
 reset.addEventListener("click", () => {
-    clearInterval(timerId);
-    timerId = null
-    msec = 0;
-    sec = 0;
-    mins = 0;
+  clearInterval(timerId);
+  msec = 0;
+  sec = 0;
+  mins = 0;
 
-    timerDisplay.textContent = `00:00:00`
-})
-
-function startTimer() {
-    msec++
-    if (msec == 100) {
-        msec = 0
-        sec++;
-        if (sec == 60) {
-            sec = 0;
-            mins++
-        }
-    }
-
-    let msecString = msec < 10 ? `0${msec}` : msec;
-    let secString = sec < 10 ? `0${sec}` : sec;
-    let minsString = mins < 10 ? `0${mins}` : mins;
-    timerDisplay.innerHTML= `${minsString}:${secString}:${msecString}`;
-
-
-}
+  timerDisplay.textContent = `00:00:00`;
+});
